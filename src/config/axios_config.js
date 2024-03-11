@@ -6,7 +6,6 @@ const axios_instance = axios.create({
 
 
 axios_instance.interceptors.response.use(response =>{
-    console.log(response.status);
     const response_data = {
         data: response?.data,
         status: response.status

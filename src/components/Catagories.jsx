@@ -3,9 +3,9 @@ import useData from '../hooks/useData';
 import { jokeContext } from '../context/JokesContext';
 
 export const Catagories = () => {
-  const {data} = useData("/categories");
+  const {data,loading} = useData("/categories");
   const [categories,setCategories] = useState([]);
-  const {getToken} = useContext(jokeContext);
+  const {token,getToken} = useContext(jokeContext);
 
   useEffect(()=>{
     setCategories(data)
@@ -16,10 +16,19 @@ export const Catagories = () => {
     localStorage.setItem("category",data)
   }
 
+  if(loading){
+    return <div className='loading'>
+      <h1>Chuck Norris Joke Genarator</h1>
+      <div className="loading-line">
+
+      </div>
+    </div>
+  }
+
   return (
     <div className='catagories_container'>
       {
-        categories?.map((data,index)=> (<button onClick={()=>setCategory(data)} className='catagories' key={index}>{data}</button>))
+        categories?.map((data,index)=> (<button disabled={token === data} onClick={()=>setCategory(data)} className='catagories' key={index}>{data}</button>))
       }
     </div>
   )
